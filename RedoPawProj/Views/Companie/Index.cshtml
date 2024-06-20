@@ -1,0 +1,49 @@
+﻿@model IEnumerable<RedoPawProj.Models.CompanieModel>
+@{
+    ViewData["Title"] = "Companies";
+}
+
+<h2>Companies</h2>
+
+<!-- Sort by Domain Button -->
+<form method="get" asp-action="Index" class="mb-3">
+    <button type="submit" name="sortByDomain" value="true" class="btn btn-primary">Sort by Domain</button>
+</form>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Established Date</th>
+                <th>Domain</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Nume</td>
+                    <td>@item.Adresa</td>
+                    <td>@item.NumarTelefon</td>
+                    <td>@item.DataInfiintarii.ToShortDateString()</td>
+                    <td>@item.DomeniuActivitate?.Nume</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No companies available.</p>
+}
+
+<a asp-action="Create" class="btn btn-primary">Create New</a>
